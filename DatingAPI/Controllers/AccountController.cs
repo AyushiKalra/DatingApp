@@ -14,9 +14,9 @@ namespace DatingAPI.Controllers
         private readonly DataContext _context;
         private readonly ITokenService _tokenService;
 
-        public AccountController(DataContext context , ITokenService tokenService)
+        public AccountController(DataContext context, ITokenService tokenService)
         {
-            _context = context;            
+            _context = context;
             _tokenService = tokenService;
         }
         //POST because we are creating a resource on the server
@@ -38,7 +38,8 @@ namespace DatingAPI.Controllers
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return new UserDTO {
+            return new UserDTO
+            {
                 Username = user.UserName,
                 Token = _tokenService.CreateToken(user)
             };
@@ -59,7 +60,8 @@ namespace DatingAPI.Controllers
             {
                 if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid Password");
             }
-            return new UserDTO {
+            return new UserDTO
+            {
                 Username = user.UserName,
                 Token = _tokenService.CreateToken(user)
             };
