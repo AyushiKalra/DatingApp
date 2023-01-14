@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AccountService } from 'app/_services/account.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,7 @@ export class RegisterComponent implements OnInit {
 //to emit info from child(Register) to parent(child) component we need Output decorator here.
 @Output() cancelRegister = new EventEmitter();
 
-constructor(private accountService : AccountService) { 
+constructor(private accountService : AccountService, private toastr : ToastrService) { 
 }
 
 ngOnInit() : void {}
@@ -23,7 +24,7 @@ register() {
     next : () =>{
       this.cancel();
     },
-    error: error=> console.log(error)
+    error : error => console.log(this.toastr.error(error.error)) 
   })
 }
 cancel(){

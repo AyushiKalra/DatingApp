@@ -1,12 +1,4 @@
-//ENTRY POINT FPR OUR APPLICATION
-using System.Text;
-using DatingAPI.Data;
 using DatingAPI.Extensions;
-using DatingAPI.Interfaces;
-using DatingAPI.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
