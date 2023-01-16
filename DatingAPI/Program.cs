@@ -1,4 +1,5 @@
 using DatingAPI.Extensions;
+using DatingAPI.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+//inserting our exception handler middleware
+app.UseMiddleware<ExceptionMiddleware>();
 
 //using the CORS in middleware //adding in request header that the API requesting data is safe.
 app.UseCors(policyBuilder=> policyBuilder.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
