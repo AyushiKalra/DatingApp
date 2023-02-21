@@ -1,5 +1,8 @@
+using AutoMapper;
 using DatingAPI.Data;
+using DatingAPI.DTOs;
 using DatingAPI.Entities;
+using DatingAPI.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,27 +18,29 @@ namespace DatingAPI.Controllers
         //we want to use the Data context service from Program.cs class so that we have access to a database session.
         //implementing dependency injection
         //in order to inject something into a class, we need to provide the class with a constructor.
-        private readonly DataContext _context;
         //constructor for the class.
-        public UsersController(DataContext context)
+        public readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
+        public UsersController(IUserRepository userRepository, IMapper mapper)
         {
-            _context = context;
+            _mapper = mapper;
+            _userRepository = userRepository;
 
         }
         //ActionResult helps in returning an HTTP based response.
         //To make the code asynchronous so that one lengthy query to the database doesn't block other requests from the server, add async.
-        [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetUser()
+        public async Task<ActionResult<IEnumerable<MemberDTO>>> GetUser()
         {
-            var users = await _context.Users.ToListAsync();//get all users
+            var users = await _userRepository.GetMembersAsync();//get all users
 
-            return users;
+            return Ok(users);
         }
-        [HttpGet("{id}")]
-        public async Task<ActionResult<AppUser>> GetUser(int id)
+        
+         [HttpGet("{username}")]
+        public async Task<ActionResult<MemberDTO>> GetUserByUsername(string username)
         {
-            return await _context.Users.FindAsync(id); //get user on the basis of primary key
+            return await _userRepository.GetMemberByUsernameAsync(username); //get user on the basis of primary key
         }
     }
 }

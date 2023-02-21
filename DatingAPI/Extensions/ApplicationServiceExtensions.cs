@@ -23,6 +23,11 @@ namespace DatingAPI.Extensions
             //add tokenservice to the services container
 
             services.AddScoped<ITokenService, TokenService>();
+            //add the repository to the service contianer.
+            services.AddScoped<IUserRepository, UserRepository>();//scoped to the level of HTTP request.
+            //add automapper to our service container 
+            //so we can use it in our controller to return data as we need from DTO and not entity.
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             return services;
         }
     }
