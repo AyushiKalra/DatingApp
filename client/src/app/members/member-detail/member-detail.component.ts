@@ -24,6 +24,7 @@ constructor(private memberService : MembersService , private route : ActivatedRo
       height : '500px',
       imagePercent : 100,
       thumbnailsColumns: 4,
+      imageAnimation : NgxGalleryAnimation.Slide,
       preview : false 
     }]
   }
