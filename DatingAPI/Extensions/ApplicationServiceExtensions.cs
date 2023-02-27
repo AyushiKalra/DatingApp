@@ -1,4 +1,5 @@
 using DatingAPI.Data;
+using DatingAPI.Helpers;
 using DatingAPI.Interfaces;
 using DatingAPI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,10 @@ namespace DatingAPI.Extensions
             //add automapper to our service container 
             //so we can use it in our controller to return data as we need from DTO and not entity.
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            //add cloudinary settings to our services
+            services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
+            //add the PhotoUpload service to our service container so that we can inject the service to our classes.
+            services.AddScoped<IPhotoService,PhotoService>();
             return services;
         }
     }

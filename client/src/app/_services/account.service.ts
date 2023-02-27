@@ -24,9 +24,7 @@ export class AccountService {
           map((response : User) => {
             const user = response;
             if(user){
-              //store the user info in browser local storage, it acccepts key value pair in terms of strings (user is an object)
-              localStorage.setItem("user" , JSON.stringify(user)); 
-              this.currentUserSource.next(user);  
+              this.setCurrentUser(user);  
             }
           })
         );
@@ -37,14 +35,15 @@ export class AccountService {
         we can transform the observable before the component subscribes to it*/
         return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
           map(user => {
-            if(user){
-              localStorage.setItem("user", JSON.stringify(user));
-              this.currentUserSource.next(user);
+            if(user){          
+              this.setCurrentUser(user);
             }
           })
         );
       }
       setCurrentUser(user : User){
+        //store the user info in browser local storage, it acccepts key value pair in terms of strings (user is an object)
+        localStorage.setItem("user", JSON.stringify(user));
         this.currentUserSource.next(user);
       }
       logout(){

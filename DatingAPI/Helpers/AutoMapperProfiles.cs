@@ -21,6 +21,7 @@ namespace DatingAPI.Helpers
             //the above code tells the automapper to map PhotoURL in Member DTO to the main photo url from Photos entity
             //the second ForMember allows us to map age with DOB and extension method CalculateAge()
             CreateMap<Photo,PhotoDTO>();
+            CreateMap<MemberUpdateDTO,AppUser>();
         }
     }
 }
